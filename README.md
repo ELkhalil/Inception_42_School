@@ -1,6 +1,6 @@
 
 1 - understanding docker:
-------------------------
+--------------------------
 ->  First of all what is the problem we are trying to solve (i mean why there is a docker...)
         well u must know that there is a problem realeted to the software industry
     problem:
@@ -12,7 +12,7 @@
                 Frontend: Javascript and Angular 4
             -> Basically to join the team and be able to work with them you must install the previous plugins and packages.
                 - first thing you will face is the installation Errors, version error, compatibility errors...
-                 - let's go for the worst case scenario u face some issues u ask the teams they forget how they solved it 
+                - let's go for the worst case scenario u face some issues u ask the teams they forget how they solved it 
                   u must ask more to know the solution and it may not work.
                 - downgrade package versions so you can run the app... it's getting even worse. 
             -> After all the previous problems u solved now when you make some changes to the app and ur trying to deploy it for 
@@ -60,7 +60,7 @@ _> The speed of containers is very remarkable as it is very light weight.
 Docker Hub :
 ------------
 _> is a wharehouse for images but they are public any one can access it and pull it from it.
-_> you can make your own Docker registry witch is private...(like Gitlab...)
+_> you can make your own Docker rƒegistry witch is private...(like Gitlab...)
 
 DOCKER ARCHITECTURE
 -------------------
@@ -176,6 +176,46 @@ HOW TO MAKE CONTAINERS COMMUNICATE WITH EACH OTHER
 ---------------------------------------------------
 docker inpect gives you details and informations about the running container...
 
+_>  docker run -it jturpin/hollywood hollywood -> film hackers console....
+
+Docker :
+--------
+_> isolated process.
+
+Cgroups:
+    kernel limit recources, and keep track 
+Namespaces:
+    to limit a process access and make it a jail process.
+    
+docker ps       =>        list the running containers
+docker ps -a    ->        list all containers
+docker run -it  _>        inter active mode
+docker run -d   _>        detach mode
+binding the container port 
+    docker run -d -p6000:6794
+
+Debugging :
+    docker ps
+    docker logs [container_id]
+
+docker run -d -p6000:6794 --name test container
+
+use docker exec to get the terminal of your already running container 
+    docker exec -it [container] /bin/bash
+
+docker start -> works with containers 
+docker run  -> create a container from an image
+
+DOCKER NETWORKING:
+----------------------
+docker network ls
+docker network create mongo-network
+
+Purging All Unused or Dangling Images, Containers, Volumes, and Networks
+    Docker provides a single command that will clean up any resources — images, containers, volumes, and networks — that are dangling (not tagged or associated with a container):
+        docker system prune
+    To additionally remove any stopped containers and all unused images (not just dangling images), add the -a flag to the command:
+        docker system prune -a
 
 
 
