@@ -11,7 +11,7 @@ COPY    /conf/nginx.conf /etc/nginx/conf.d/
 
         # try to run it one time 
 RUN     openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt \
-        -keyout /etc/nginx/ssl/inception.key -subj "/C=MR/L=BENGUERIR/O=1337/OU=1337/CN=aelkhali.42.fr/UID=aelkhali"
+        -keyout /etc/nginx/ssl/inception.key -subj "/C=MA/L=BENGUERIR/O=1337/OU=1337/CN=aelkhali.42.fr/UID=aelkhali"
 
 RUN     mkdir -p /var/run/nginx
 
