@@ -14,6 +14,4 @@ RUN     wget    https://wordpress.org/wordpress-6.4.2.zip && \
 COPY    ./tools/setup_wordpress.sh .
 RUN     chmod 777 setup_wordpress.sh
 
-EXPOSE  9000
-
 CMD     ["sh", "setup_wordpress.sh"]
