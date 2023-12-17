@@ -2,30 +2,27 @@
 
 # Setup Workdidpress
 mkdir -p    /var/www/html
-unzip       wordpress-6.4.2.zip -d /var/www/html/
-rm  -rf     wordpress-6.4.2.zip
+cd          /var/www/html
+wget        https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 
 # setup wordpress WP-CLI
 chmod +x    wp-cli.phar
 mv          wp-cli.phar /usr/local/bin/wp
-chown -R    www-data:www-data /var/www/html/wordpress/
 
-wp config create	--allow-root 
-                    --dbname=${MYSQL_DATABASE_NAME}
-                    --dbuser=${MYSQL_USER}
-                    --dbpass=${MYSQL_PASSWORD}
-                    --dbhost=mariadb:3306 --path='/var/www/html/wordpress'
+wp          core download --allow-root
 
-wp core install     --allow-root 
-                    --url=localhost
-                    --title=${WP_SITE_TITLE}
-                    --admin_user=${WP_ADMIN}
-                    --admin_password=${WP_ADMIN_PASS}
-                    --admin_email=${WP_ADMIN_EMAIL} 
+sleep 5
 
-wp user create      --allow-root
-                    ${WP_USER} ${WP_USER_EMAIL} 
-                    --user_pass=${WP_USER_PASS} 
-                    --role=subscriber
+mv wp-config-sample.php wp-config.php
 
-exec /usr/sbin/php-fpm7.4 -F
+sleep 5
+
+sed -i "s/database_name_here/$MYSQL_DATABASE_NAME/1" wp-config.php
+sed -i "s/username_here/$MYSQL_USER/1" wp-config.php
+sed -i "s/password_here/$MYSQL_PASSWORD/1" wp-config.php
+sed -i "s/localhost/mariadb:3306/1" wp-config.php
+
+wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_SITE_TITLE} --admin_user=${WP_ADMIN} --admin_password=${WP_ADMIN_PASS} --admin_email=${WP_ADMIN_EMAIL} --skip-email
+wp user create --allow-root ${WP_USER} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASS} --role=subscriber
+
+exec /usr/sbin/php-fpm7.4 -F -R
