@@ -280,3 +280,57 @@ an example config file to base on :
             fastcgi_pass wordpress:9000;
         }
     }
+
+
+Docker Volumes and HOT RELOAD:
+-------------------------------
+    one of the most important thing in docker is volumes and how we can listen to files changes from the host 
+    or from the container itself, and how we can transfer run time data from a running container to our host machine because 
+    anything happened to the container (means a prune to the data it holds) suppose we are running a database server contianer we must save this data somewhere...as we know this container is just a running process that uses RAM memory if it stops we will not find anything...
+
+syntax for docker volumes:
+    -v  host_directory : container_directory [flag]
+    
+    -v: to tell docker we will add a volume
+    host_directory: used to save or transfer data during run time of container
+    container_directory : used to store data inside the container 
+    [flag] -> used to tell docker the permission
+
+the first one and it is the famous one it two way binding:
+    when we are merroring a folder with the data inside a container for example:
+        -v /app/data:/var/http/data
+        -v   host_folder:container_data 
+    the issue with this is if someone deleted the data folder inside the container and we are listening to it using the two way binding 
+    it will be deleted from our host so we must think of limiting this access....
+
+we must limit this full access and this will take us to the new solution -> the one way binding
+-> we listen to the container data folder and we limit it's access to the folder we are mirroring the data inside
+    example:
+        -v /app/data:/var/http/data:ro  -> ro = read only
+    now if we are inside the container and inside /var/http/data and we try to delete/create something it will not be possible
+        -> this file system has read only access.
+
+-> there still one issue after solving the previous one
+    this one is very dangerous what if someone deleted the libraries from the host folder and the app inside the container depends on them this will create 
+    a very big problem (container stop)
+    this one can be solved by using "anonymos volumes" using the same previous syntax we add another -v to protect the important directories inside the container
+    doing it this way:
+        -v /app/data:/var/http/data:ro  -> ro -v /var/http/data/important
+
+---> this what answer a very big question why people use such a hirachy to store it's application to make the binding simple
+    if we use a src directory to store our app data only and let other thing outside we will make our binding easier and bind
+    only the required src folder...
+
+Docker-compose:
+---------------
+    is just a simple utility, that comes as an extension with docker, it does not do anything that we cannot do
+    it just makes our like easier and help us manage and not write big commands to do a simple thing like building and running
+    a container.
+    without DC we must:
+        1- build image manually
+        2 - tag it manually
+        3 - run a container
+        ...
+    docker compose simplify this process in a very short command like : docker-compose up
+
+ 

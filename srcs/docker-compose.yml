@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  mariadb:
+    container_name: mariadb
+    build: ./srcs/requirements/mariadb/Dockerfile
+    volumes:
+      - ./src:/app/src:ro
+    ports:
+      - "443:443"
+    
