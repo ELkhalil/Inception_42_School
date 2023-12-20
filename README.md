@@ -332,5 +332,229 @@ Docker-compose:
         3 - run a container
         ...
     docker compose simplify this process in a very short command like : docker-compose up
+    -> depends_on:
+        - depends_on does not wait for db and redis to be "ready" before starting web - 
+        only until they have been started. If you need to wait for a service to be ready, 
+        see Controlling startup order for more on this problem and strategies for solving it.
+        The depends_on option is ignored when deploying a stack in swarm mode with a version 3 Compose file.
 
- 
+
+Environment Variables:
+----------------------
+    passing ENV is a must, because most apps uses env to configure.
+    one of the way to pass an ENV to a container is by using the ENV keywoard
+        "ENV example test" -> this if we are building an images throug docker file
+    -> we can also pass an argument when we are running the container from the images by
+        adding a flag :
+        docker run -it --env PORT=4000 --env TEST=abdo debian:bullseye bash 
+    but what if we have more than 20 ENV for example it is a bad idea to do it from the command as it will be painful
+    for that we use .env file that will be passed to each container
+    -> first we can store them inside a file and transfer this file to our container while starting it
+        --env-file ./file_path
+    -> we can also pass it to docker compose like this:
+        environement:
+            - PORT=value
+            - TEST=NOTHING
+        env_file:
+            - ./env_path
+
+DOCKR NETWORKS:
+----------------
+    using docker compose to run a set of containers will produce a default network for them
+    you can inspect the network and everything using "docker inspect"
+    or use:
+         docker network ls
+            ps -> there is some default networks that comes whith docker itself
+    "every container of them has its own IP address but docker comes with a great solution like using domain name when browsing the web
+    just use the name of the service and you can access it's IP directly" 
+
+In the context of Docker and computer networking in general, a network refers to a collection of interconnected devices or nodes (such as computers, containers, or virtual machines) that can communicate and share resources with each other. A network can be physical, like a set of connected devices with cables, or it can be virtual, like a logical connection established between software entities.
+
+Here's a breakdown of key concepts related to networks:
+
+1. **Physical Network:**
+   - **Hardware Components:** This includes physical devices such as routers, switches, and cables that enable communication between computers.
+
+2. **Logical Network:**
+   - **Software Abstraction:** Networks are often abstracted into logical entities to simplify management and configuration. In Docker, these logical entities are created and managed by Docker's networking features.
+
+3. **Docker Network (Software Network):**
+   - **Container Connectivity:** In the context of Docker, a network is a virtual space that allows containers to communicate with each other and with the external world.
+   - **Software-Defined Networks (SDN):** Docker uses a software-defined networking approach to create, manage, and configure networks. This means that network configurations are handled through software rather than relying solely on physical hardware.
+
+4. **Creation of Docker Networks:**
+   - **Bridge Networks:** When you run a Docker container without specifying a network, it is connected to the default bridge network. You can also create custom bridge networks with specific configurations, such as subnet and gateway settings.
+   - **Host Networks:** Containers can be connected to the host's network namespace, sharing the host's network stack. This is done using the `--network=host` option.
+   - **Overlay Networks:** These are used for connecting containers running on different Docker hosts. This is particularly useful in distributed applications. Docker Swarm and Kubernetes often utilize overlay networks.
+   - **Macvlan Networks:** These networks give containers their own MAC addresses, allowing them to appear as physical devices on the network.
+
+5. **Container Communication:**
+   - Containers within the same Docker network can communicate with each other using their container names as hostnames or through IP addresses.
+   - Docker provides DNS resolution for container names within the same network.
+
+6. **External Connectivity:**
+   - Containers can be exposed to the external network through port mappings, allowing access to services running inside the containers.
+
+In summary, a network, in the context of Docker and general computing, is a means of connecting and enabling communication between devices. Docker provides software-defined networking capabilities that allow containers to be part of virtual networks, and these networks can be customized based on specific requirements.
+---------------------------------------------------------------------------------------------------------------------------
+-> PID 1 and the best practices for writing Dockerfiles.
+
+### PID 1 (Process ID 1):
+
+In traditional Unix systems, PID 1 represents the first process started by the kernel during the boot process. This process is crucial because it has special responsibilities, including reaping orphaned child processes and responding to signals. In the context of Docker containers, the PID 1 process is significant because it determines how signals are handled within the container.
+
+When a container starts, the process specified in the Dockerfile as CMD or ENTRYPOINT becomes PID 1. However, there is a key difference between PID 1 in a container and PID 1 on a host system. PID 1 in a container doesn't have the same responsibilities as the init system on a host.
+
+Here are some best practices related to PID 1 in Docker containers:
+
+1. **Signal Handling:**
+   - PID 1 in a container should be able to handle signals correctly. For example, it should gracefully handle a SIGTERM signal to allow for a clean shutdown when the `docker stop` command is issued.
+
+2. **Avoid Running as a Daemon:**
+   - It's generally recommended not to run your main application process as a daemon in the foreground. Running the process in the foreground allows it to receive signals and respond appropriately.
+
+3. **Use Exec Form in CMD/ENTRYPOINT:**
+   - When specifying the CMD or ENTRYPOINT in your Dockerfile, consider using the exec form to run the command directly. This form replaces the shell process with the specified command, avoiding the creation of an additional process.
+
+### Dockerfile Best Practices:
+
+When writing Dockerfiles, there are several best practices to ensure efficient, secure, and maintainable container images:
+
+1. **Use Minimal Base Images:**
+   - Start with a minimal base image that contains only the necessary components for your application. This helps reduce the image size and potential security vulnerabilities.
+
+2. **Layering:**
+   - Utilize Docker's layer caching mechanism to optimize image builds. Place frequently changing or updating instructions at the end of the Dockerfile to take advantage of caching.
+
+3. **Clean Up After Each Step:**
+   - Remove unnecessary files and dependencies after each step in your Dockerfile to minimize the final image size.
+
+4. **COPY Before Installing Dependencies:**
+   - When copying files into the image, do it before installing dependencies. This way, you can take advantage of caching if the dependencies haven't changed.
+
+5. **Use Non-Root User:**
+   - Run your application as a non-root user to enhance security. Avoid running processes as the root user whenever possible.
+
+6. **Specify Version Numbers:**
+   - Specify version numbers for your base images and dependencies to ensure reproducibility and avoid unexpected changes.
+
+7. **Combine RUN Commands:**
+   - Combine multiple RUN commands into a single line using && to minimize the number of layers in the image.
+
+8. **Label Your Images:**
+   - Add labels to your images to provide metadata and information about the image.
+
+By following these best practices, you can create Docker images that are efficient, secure, and easier to maintain.
+---------------------------------------------------------------------------------------------------------------------------
+
+Certainly! Let's delve into each of these points:
+
+### 1. Avoid Running as a Daemon:
+
+When it's mentioned to avoid running your main application process as a daemon, it means that you should not background the main process using the traditional daemonizing mechanisms (e.g., appending `&` at the end of a command or using tools like `nohup`). Instead, you should let the main process run in the foreground. The primary reasons for this recommendation are:
+
+- **Signal Handling:** Running a process in the foreground allows it to receive signals properly. In Docker, signals are crucial for managing the lifecycle of a container. For example, when you run `docker stop` or `docker restart`, a SIGTERM signal is sent to the main process of the container. If the process is running in the foreground, it can catch and handle the signal gracefully.
+
+- **Clean Shutdown:** When the main process runs in the foreground, Docker has better control over the termination of the container. This ensures that the application has an opportunity to shut down gracefully, clean up resources, and release any locks or stateful data.
+
+- **Logging:** Running in the foreground simplifies logging. The logs of a foreground process are directly visible in the container's standard output and standard error streams, which makes it easier to capture and manage logs.
+
+### 2. Use Exec Form in CMD/ENTRYPOINT:
+
+In a Dockerfile, the CMD or ENTRYPOINT instruction specifies the command that will be run when a container is started. The choice between CMD and ENTRYPOINT depends on whether you want to provide default arguments or enforce a specific command.
+
+When it comes to using the exec form in CMD or ENTRYPOINT, it means specifying the command directly without involving a shell process. Here's a comparison:
+
+- **Shell Form:**
+  ```Dockerfile
+  CMD npm start
+  ```
+
+- **Exec Form:**
+  ```Dockerfile
+  CMD ["npm", "start"]
+  ```
+
+The key advantages of using the exec form include:
+
+- **Signal Propagation:** The exec form ensures that signals are directly sent to the specified command, without the interference of a shell process. This is important for proper signal handling and graceful shutdown.
+
+- **Avoiding Shell Features:** The exec form avoids potential issues related to shell features (e.g., variable substitution, shell meta-characters) that might cause unexpected behavior.
+
+- **PID 1 as the Executed Command:** When using the exec form, the command becomes the PID 1 process of the container. This is important for signal handling, especially for proper termination when signals like SIGTERM are sent to the container.
+
+In summary, avoiding the daemon mode and using the exec form in CMD/ENTRYPOINT contribute to better signal handling, graceful shutdown, and overall improved container behavior in the Docker environment.
+
+for example:
+Yes, exactly! Your example uses the exec form in the CMD instruction and follows the best practice of running the main process (in this case, Nginx) in the foreground rather than as a daemon. Here's a breakdown of your CMD instruction:
+
+```Dockerfile
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+- **Exec Form:** The command is specified in the exec form using a JSON array. Each element of the array represents an argument to the command.
+
+- **Nginx Command:** The main process to be executed is `nginx`.
+
+- **"-g daemon off;" Argument:** The argument passed to Nginx is `-g daemon off;`. This argument instructs Nginx to run in the foreground and not as a daemon. The `daemon off;` configuration ensures that Nginx doesn't detach and remains in the foreground, allowing Docker to manage signals and the container's lifecycle more effectively.
+
+By using this approach, your Nginx process will run in the foreground, allowing Docker to properly handle signals and enabling a cleaner shutdown when necessary. This is a good practice for running processes within Docker containers.
+
+How docker works under the hood ?
+-----------------------------------
+docker only virtualize the following 6 namespaces:
+    mnt/file system
+    network             -> give an IP to our container.
+    uts                 -> help setup a host name inside the container.
+    pid                 -> 
+    ipc
+    user
+
+Docker debugging commands :
+----------------------------
+    checking docker version output two main things:
+        cmd -> docker version
+    Client:
+    Cloud integration: v1.0.24
+    Version:           20.10.14
+    API version:       1.41
+    Go version:        go1.16.15
+    Git commit:        a224086
+    Built:             Thu Mar 24 01:49:20 2022
+    OS/Arch:           darwin/amd64
+    Context:           default
+    Experimental:      true
+
+    Server: Docker Desktop 4.8.2 (79419)
+    Engine:
+    Version:          20.10.14
+    API version:      1.41 (minimum version 1.12)
+    Go version:       go1.16.15
+    Git commit:       87a90dc
+    Built:            Thu Mar 24 01:46:14 2022
+    OS/Arch:          linux/amd64
+    Experimental:     false
+    containerd:
+    Version:          1.5.11
+    GitCommit:        3df54a852345ae127d1fa3092b95168e4a88e2f8
+    runc:
+    Version:          1.0.3
+    GitCommit:        v1.0.3-0-gf46b6ba
+    docker-init:
+    Version:          0.19.0
+    GitCommit:        de40ad0
+
+    cmd -> docker system info 
+    cmd -> docker system events
+
+questions :
+    how this docker client server thing work ?
+
+
+
+
+
+
+
+
+

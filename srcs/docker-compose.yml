@@ -4,7 +4,40 @@ services:
     container_name: mariadb
     build: ./srcs/requirements/mariadb/Dockerfile
     volumes:
-      - ./src:/app/src:ro
+      - mariadb:/app/src
     ports:
       - "443:443"
-    
+    restrat: always
+    env-file:
+      - ../.env
+    deploy:
+      restart_policy:
+        condition: on-failure
+  wordpress:
+    container_name: wordpress
+    build: ./srcs/requirements/wordpress/Dockerfile
+    volumes:
+      - wordpress:/app/src:ro # still need to be fixed
+    ports:
+      - "9000:9000"
+    restrat: always
+    depends_on:
+      - mariadb
+      - nginx
+    env-file:
+      - ../.env
+    deploy:
+      restart_policy:
+        condition: on-failure
+  nginx:
+    container_name: nginx
+    build: ./srcs/requirements/nginx/Dockerfile
+    ports:
+      - "443:443"
+    restrat: always
+    deploy:
+      restart_policy:
+        condition: on-failure
+volumes:
+  mariadb:
+  wordpress:

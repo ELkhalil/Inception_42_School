@@ -17,4 +17,9 @@ COPY    ./tools/setup_wordpress.sh .
 
 RUN     chmod 777 setup_wordpress.sh
 
-CMD     ["sh", "setup_wordpress.sh"]
+ENTRYPOINT      ["setup_wordpress.sh"]
+
+CMD             ["/usr/sbin/php-fpm7.4", "-F"]
+
+# CMD     ["sh", "setup_wordpress.sh"]
+

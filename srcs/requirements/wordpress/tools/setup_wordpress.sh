@@ -16,4 +16,4 @@ sed -i "s/localhost/mariadb/1" wp-config.php
 wp core install --allow-root --url=${DOMAIN_NAME} --title=${WP_SITE_TITLE} --admin_user=${WP_ADMIN} --admin_password=${WP_ADMIN_PASS} --admin_email=${WP_ADMIN_EMAIL} --skip-email
 wp user create --allow-root ${WP_USER} ${WP_USER_EMAIL} --user_pass=${WP_USER_PASS} --role=subscriber
 
-exec /usr/sbin/php-fpm7.4 -F
+# exec /usr/sbin/php-fpm7.4 -F
