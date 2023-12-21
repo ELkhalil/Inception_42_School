@@ -1,46 +1,49 @@
 version: "3.8"
 services:
-
   nginx:
     container_name: nginx
-    build: ./srcs/requirements/nginx/Dockerfile
+    build:
+      context: requirements/nginx
+      dockerfile: Dockerfile
     volumes:
-      - wordpress:/var/www/html;
+      - wordpress_data:/var/www/html
     depends_on:
       - wordpress
     ports:
       - "443:443"
     env_file:
       - .env
-    restrat: always
+    restart: always
     networks:
       - inception
-
   mariadb:
     container_name: mariadb
-    build: ./srcs/requirements/mariadb/Dockerfile
+    build:
+      context: requirements/mariadb
+      dockerfile: Dockerfile
     volumes:
-      - mariadb:/var/lib/mysql
-    expose:
-      - "3306"
-    env-file:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    env_file:
       - .env
-    restrat: always
+    restart: always
     networks:
       - inception
-
   wordpress:
     container_name: wordpress
-    build: ./srcs/requirements/wordpress/Dockerfile
+    build:
+      context: requirements/wordpress
+      dockerfile: Dockerfile
     volumes:
-      - wordpress:/var/www/html
+      - wordpress_data:/var/www/html
     depends_on:
       - mariadb
-    expose:
-      - "9000"
-    env-file:
+    ports:
+      - "9000:9000"
+    env_file:
       - .env
-    restrat: always
+    restart: always
     networks:
       - inception
 
@@ -49,15 +52,15 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb:
+  mariadb_data:
     driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /home/aelkhali/data/mariadb
-  wordpress:
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aelkhali/data/mariadb
+  wordpress_data:
     driver: local
-      driver_opts:
-        type: none
-        o: bind
-        device: /home/aelkhali/data/wordpress
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aelkhali/data/wordpress

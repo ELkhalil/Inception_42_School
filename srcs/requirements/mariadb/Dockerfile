@@ -1,14 +1,12 @@
 FROM            debian:bullseye
         
-RUN             apt update -y && apt upgrade -y && \
-                apt install mariadb-server -y && \
-                rm -rf /var/lib/apt/lists/*
-        
-COPY            conf/50-server.cnf /etc/mysql/mariadb.conf.d/50-server.cnf
-COPY            tools/setup_db.sh .
+RUN             apt-get update -y && apt-get upgrade -y && \
+                apt-get install mariadb-server -y
+
+WORKDIR         /app
+
+COPY            tools/setup_db.sh /app
         
 RUN             chmod 777 setup_db.sh
 
-ENTRYPOINT      [ "setup_db.sh"]
-
-CMD             [ "mysqld"]
+CMD             [ "sh", "/app/setup_db.sh"]

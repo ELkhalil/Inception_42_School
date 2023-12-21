@@ -1,6 +1,6 @@
-LOCAL_DATA_PATH=./srcs/data
-DATA_PATH=./srcs/data/mariadb
-WORDPRESS_DATA_PATH=./srcs/data/wordpress
+LOCAL_DATA_PATH= /home/aelkhali/data
+DATA_PATH=/home/aelkhali/data/mariadb
+WORDPRESS_DATA_PATH=/home/aelkhali/data/wordpress
 
 COMPOSE_PATH = ./srcs/docker-compose.yml
 RM= rm -rf
@@ -23,6 +23,8 @@ down:
 prune:
 	docker rm -f $$(docker ps -a -q)
 	docker rmi -f $$(docker images -aq)
+
+volume_rm:
 	docker volume rm $$(docker volume ls -q)
 
 wipe : prune
