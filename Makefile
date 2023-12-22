@@ -1,10 +1,10 @@
-LOCAL_DATA_PATH= /home/aelkhali/data
-DATA_PATH=/home/aelkhali/data/mariadb
-WORDPRESS_DATA_PATH=/home/aelkhali/data/wordpress
+LOCAL_DATA_PATH = /home/aelkhali/data
+DATA_PATH = /home/aelkhali/data/mariadb
+WORDPRESS_DATA_PATH = /home/aelkhali/data/wordpress
 
 COMPOSE_PATH = ./srcs/docker-compose.yml
-RM= rm -rf
-CR_DIR= mkdir -p
+RM = rm -rdf
+CR_DIR = mkdir -p
 
 all: create_directories compose_up
 
@@ -12,22 +12,22 @@ create_directories:
 	$(CR_DIR) $(DATA_PATH) $(WORDPRESS_DATA_PATH)
 
 compose_up:
-	docker-compose up --build -f $(COMPOSE_PATH)
+	docker-compose -f $(COMPOSE_PATH) up -d --build
 
-up: 
-	docker-compose up -f $(COMPOSE_PATH)
+up:
+	docker-compose -f $(COMPOSE_PATH) up -d
 
 down:
-	docker-compose down -f $(COMPOSE_PATH)
+	docker-compose -f $(COMPOSE_PATH) down
 
-prune:
-	docker rm -f $$(docker ps -a -q)
-	docker rmi -f $$(docker images -aq)
-
-volume_rm:
+clean: down
+	docker rm $$(docker ps -aq) -f
+	docker rmi $$(docker images -aq) -f
 	docker volume rm $$(docker volume ls -q)
+	docker network prune -f
 
-wipe : prune
-	$(RM) $(LOCAL_DATA_PATH)
+fclean:
+	sudo $(RM) $(LOCAL_DATA_PATH)/*
+	docker system prune -af
 
-.PHONY: all up down prune wipe create_directories compose_up
+.PHONY: all create_directories compose_up up down clean fclean

@@ -1,9 +1,9 @@
 #!/bin/sh
 
 wp core download --allow-root
-mv wp-config-sample.php wp-config.php
 
 sed -i "s|/run/php/php7.4-fpm.sock|9000|1" /etc/php/7.4/fpm/pool.d/www.conf
+
 sed -i "s/database_name_here/$MYSQL_DATABASE_NAME/1" wp-config.php
 sed -i "s/username_here/$MYSQL_USER/1" wp-config.php
 sed -i "s/password_here/$MYSQL_PASSWORD/1" wp-config.php

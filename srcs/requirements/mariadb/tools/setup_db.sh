@@ -16,6 +16,7 @@ mysqladmin -u root -p${MYSQL_ROOT} shutdown
 
 exec mysqld_safe --bind_address="0.0.0.0"
 
+
 # exec mysqld # replaces the current shell process with the MariaDB server process.
 
 # Running a process in the foreground allows it to be the main process (PID 1) of the container, 
