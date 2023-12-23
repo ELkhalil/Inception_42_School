@@ -23,8 +23,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - mariadb_data:/var/lib/mysql
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     env_file:
       - .env
     restart: always
@@ -39,8 +39,8 @@ services:
       - wordpress_data:/var/www/html
     depends_on:
       - mariadb
-    ports:
-      - "9000:9000"
+    expose:
+      - "9000"
     env_file:
       - .env
     restart: always
@@ -49,16 +49,19 @@ services:
 
 networks:
   inception:
+    name: inception_net
     driver: bridge
 
 volumes:
   mariadb_data:
+    name: mariadb_vol
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/aelkhali/data/mariadb
   wordpress_data:
+    name: wordpress_vol
     driver: local
     driver_opts:
       type: none

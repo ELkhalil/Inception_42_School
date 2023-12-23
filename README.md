@@ -31,10 +31,8 @@ How Docker Works?
     docker uses the linux kernel mainly, specifically the Cgroups (constrol groups) 
     Cgroups : they manage kernel ressources (CPU|GPU|RAM|IO...)
     Basically docker tell the kernel through the Cgroups its need of recourses.
-
     The second thing is NameSpace:
-    -------------------------------
-    it allows to abstract the container or hide it, it is like using nnamespace in c++.
+        it allows to abstract the container or hide it, it is like using nnamespace in c++.
 
 Part 1:
 -------
@@ -59,12 +57,34 @@ _> The speed of containers is very remarkable as it is very light weight.
 
 Docker Hub :
 ------------
-_> is a wharehouse for images but they are public any one can access it and pull it from it.
-_> you can make your own Docker rƒegistry witch is private...(like Gitlab...)
+    _> is a wharehouse for images but they are public any one can access it and pull it from it.
+    _> you can make your own Docker rƒegistry witch is private...(like Gitlab...)
 
 DOCKER ARCHITECTURE
 -------------------
-Server docker daemon(DOCKER ENGINE)    ->      REST API    -> Client docker CLI (command line interface)
+Server docker daemon (DOCKER ENGINE)    ->      REST API    -> Client docker CLI (command line interface)
+    Yes, you're correct in your understanding. Docker follows a client-server architecture. Here's a basic overview of how it works:
+
+    1. **Docker Daemon (Server):** The Docker daemon is a background process that manages Docker containers on a system. It listens 
+    for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. 
+    The Docker daemon is responsible for building, running, and managing containers.
+
+    2. **Docker Client:** The Docker client is a command-line tool or a graphical user interface that allows users to interact 
+    with the Docker daemon. When you run Docker commands, such as `docker run` or `docker build`, you are essentially sending 
+    requests to the Docker daemon.
+
+    3. **Communication:** The Docker client and daemon communicate using the Docker API, typically over a Unix socket or a network 
+    interface. By default, the Docker client communicates with the Docker daemon on the same machine. However, 
+    you can configure the Docker client to communicate with a remote Docker daemon, which is useful in certain scenarios.
+
+    When you install the Docker app (Docker Desktop) on your machine, it installs both the Docker daemon and the Docker client. 
+    The Docker daemon runs as a background process, and the Docker client provides the interface through which you interact with 
+    the daemon. The client sends commands to the daemon, and the daemon carries out the requested actions, such as starting or 
+    stopping containers, building images, etc.
+
+    It's worth noting that Docker Desktop is primarily used for development and testing on a local machine. In production 
+    environments, you might have a distributed setup where Docker daemons run on different hosts, and tools like Docker 
+    Swarm or Kubernetes are used for orchestration and management.
 
 DOCKER COMMANDS:
 ----------------
@@ -86,9 +106,6 @@ Docker registries ?
 ---------------------
     _> where images are stored and gets updates so world and community can pull and upload their own (like github with codes)
     EXAMPLES:   docker hub (privare/public)
-
-HOW CAN I MAKE MY OWN DOCKER IMAGE ??
---------------------------------------
     
 DOCKER VOLUMES:
 ----------------
@@ -96,13 +113,13 @@ DOCKER VOLUMES:
     _> persists data at container disposal.
     _> USE CASES:
         1 - File Upload
-        2 - COnfiguration sync
-    
+        2 - Configuration sync
+
 THE PROCESS OF DOCKERIZING AN APP?
 ------------------------------------
 
 1- do i need to copy all files ?
-    _> there is some files u won't need it at all inside the container those files we can place them inside 
+    _> there is some files u won't need it at all inside, the container those files we can place them inside 
        a (.) ignore file .dockerignore -> and tell him what you do not want it to copy.
 
 2- Why did we split "package.json" copy command ?
@@ -175,7 +192,6 @@ we can do the same as the previous by having multiple docker files inside the pr
 HOW TO MAKE CONTAINERS COMMUNICATE WITH EACH OTHER 
 ---------------------------------------------------
 docker inpect gives you details and informations about the running container...
-
 _>  docker run -it jturpin/hollywood hollywood -> film hackers console....
 
 Docker :

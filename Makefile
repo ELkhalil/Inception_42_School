@@ -1,33 +1,42 @@
-LOCAL_DATA_PATH = /home/aelkhali/data
-DATA_PATH = /home/aelkhali/data/mariadb
-WORDPRESS_DATA_PATH = /home/aelkhali/data/wordpress
 
+# Colors :
+GREEN = \033[0;32m
+YELLOW = \033[0;33m
+RED= \033[0;31m
+BLUE = \033[0;34m
+STOP = \033[0m
+
+# Commands And Paths:
+LOCAL_DATA_PATH = /home/aelkhali/data
 COMPOSE_PATH = ./srcs/docker-compose.yml
 RM = rm -rdf
-CR_DIR = mkdir -p
 
-all: create_directories compose_up
+all: create_dirs up
 
-create_directories:
-	$(CR_DIR) $(DATA_PATH) $(WORDPRESS_DATA_PATH)
-
-compose_up:
-	docker-compose -f $(COMPOSE_PATH) up -d --build
+create_dirs:
+	@echo "$(BLUE)Setting up directories for Docker volumes...$(STOP)"
+	@mkdir -p $(LOCAL_DATA_PATH)/mariadb
+	@mkdir -p $(LOCAL_DATA_PATH)/wordpress
 
 up:
-	docker-compose -f $(COMPOSE_PATH) up -d
+	@echo "$(GREEN)building images and running containers...$(STOP)"
+	@docker-compose -f $(COMPOSE_PATH) up -d
 
 down:
-	docker-compose -f $(COMPOSE_PATH) down
+	@echo "$(YELLOW)Stopping docker running containers...$(STOP)"
+	@docker-compose -f $(COMPOSE_PATH) down
 
-clean: down
-	docker rm $$(docker ps -aq) -f
-	docker rmi $$(docker images -aq) -f
-	docker volume rm $$(docker volume ls -q)
-	docker network prune -f
+clean:
+	@echo "$(YELLOW)Cleaning up unused Docker resources...$(STOP)"
+	@docker system prune -af
 
-fclean:
-	sudo $(RM) $(LOCAL_DATA_PATH)/*
-	docker system prune -af
+fclean: down
+	@echo "$(RED)Complete Cleanup. All Docker resources removed....$(STOP)"
+	@sudo $(RM) $(LOCAL_DATA_PATH)/*
+	@docker system prune --all --volumes --force && \
+		docker volume rm mariadb_vol wordpress_vol --force && \
+		docker network rm inception_net
 
-.PHONY: all create_directories compose_up up down clean fclean
+re : fclean all
+
+.PHONY: all create_dirs up down clean fclean re

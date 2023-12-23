@@ -1,4 +1,9 @@
 root user pass :
     abdo4321
+
 regular user :
     aelkhali    4321
+
+docker hub :
+    login: sudo docker login -u abdoelkhalil
+    pass: abdo43215
