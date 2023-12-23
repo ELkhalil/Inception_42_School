@@ -12,5 +12,3 @@ COPY    tools/abdo.key /etc/nginx/ssl/
 COPY    conf/nginx.conf /etc/nginx/conf.d/
 
 CMD     ["nginx", "-g", "daemon off;"]
-
-

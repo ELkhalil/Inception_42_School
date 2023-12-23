@@ -566,6 +566,14 @@ Docker debugging commands :
 questions :
     how this docker client server thing work ?
 
+---------------------------------------------------------------------------------
+***************Adminer************
+Managing databases is one of the essential skill a programer need to have, it makes it easier
+using some database management tools like PHPmyAdmin but it is a bit complicated and it's configuration is a bit hard
+specially if we want to isntall it manually...
+our subject require adminer:
+Replace phpMyAdmin with Adminer and you will get a tidier user interface, better support for MySQL features, higher performance and more security. See detailed comparison.
+Adminer development priorities are: 1. Security, 2. User experience, 3. Performance, 4. Feature set, 5. Size.
 
 
 
