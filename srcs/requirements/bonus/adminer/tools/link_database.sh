@@ -3,7 +3,7 @@
 # mkdir -p /run/php/
 service php7.4-fpm start
 
-curl -L https://www.adminer.org/latest.php -o index.php
+curl -L https://github.com/vrana/adminer/releases/download/v4.8.1/adminer-4.8.1.php -o index.php
 chmod 777 index.php
 
 sleep 5

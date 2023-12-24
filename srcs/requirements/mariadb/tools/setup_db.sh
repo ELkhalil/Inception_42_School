@@ -1,4 +1,4 @@
-#!/bin/bash
+#!bin/bash
 
 service mariadb start
 
@@ -11,6 +11,7 @@ sleep 2
 mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '${MYSQL_ROOT}';FLUSH PRIVILEGES;"
 mysqladmin -u root -p${MYSQL_ROOT} shutdown
 exec "$@"
+
     # Using `exec` in a shell script has a specific purpose. When a script contains the `exec` command, 
     # it replaces the current shell process with the specified command, effectively ending the script at that point. 
     # Without `exec`, each line of the script is executed within the context of the script, and the script continues 

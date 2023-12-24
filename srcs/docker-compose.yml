@@ -73,6 +73,23 @@ services:
     ports:
       - "1111:1111"
     restart: always
+  cadvisor:
+    container_name: cadvisor
+    image: cadvisor_img
+    build:
+      context: requirements/bonus/cadvisor
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    privileged: true
+    networks:
+      - inception
 
 networks:
   inception:
@@ -94,3 +111,4 @@ volumes:
       type: none
       o: bind
       device: /home/aelkhali/data/wordpress
+
