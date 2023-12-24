@@ -49,6 +49,30 @@ services:
     restart: always
     networks:
       - inception
+  adminer:
+    container_name: adminer
+    image: adminer_img
+    build:
+      context: requirements/bonus/adminer
+      dockerfile: Dockerfile
+    ports:
+      - "2222:2222"
+    env_file:
+      - .env
+    restart: always
+    depends_on:
+      - mariadb
+    networks:
+      - inception
+  website:
+    container_name: portfolio_web
+    image: website_img
+    build:
+      context: requirements/bonus/website
+      dockerfile: Dockerfile
+    ports:
+      - "1111:1111"
+    restart: always
 
 networks:
   inception:

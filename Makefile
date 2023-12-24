@@ -30,12 +30,14 @@ clean:
 	@echo "$(YELLOW)Cleaning up unused Docker resources...$(STOP)"
 	@docker system prune -af
 
+clean_networks:
+	@echo "$(RED)Deleting Docker Netowrks...$(STOP)"
+	@docker network prune -f
 fclean: down
 	@echo "$(RED)Complete Cleanup. All Docker resources removed....$(STOP)"
 	@sudo $(RM) $(LOCAL_DATA_PATH)/*
 	@docker system prune --all --volumes --force && \
-		docker volume rm mariadb_vol wordpress_vol --force && \
-		docker network rm inception_net
+		docker volume rm mariadb_vol wordpress_vol --force
 
 re : fclean all
 
