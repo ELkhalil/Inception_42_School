@@ -40,20 +40,20 @@ Part 1:
     but it work on my machine sir 
     why not ship your machine ?.. this is how docker was born (by shipping the local...)
 
-Containers Motivation:
-                    Developement                           |              Deployement
-    _> "to get the dev env set up installs                 |    "to deploy ur app on  a server u must install
-       x softwares ... and scripts, wait i use windows     |     the dependencies and configure the system, then copy
-       well thats differente ..."                          |     the Deployement binary and run it with some options"
-                                                           |
-    _> "Run docker compose up"                             |      _> Run this container image with these options
+    Containers Motivation:
+                        Developement                           |              Deployement
+        _> "to get the dev env set up installs                 |    "to deploy ur app on  a server u must install
+        x softwares ... and scripts, wait i use windows     |     the dependencies and configure the system, then copy
+        well thats differente ..."                          |     the Deployement binary and run it with some options"
+                                                            |
+        _> "Run docker compose up"                             |      _> Run this container image with these options
 
-_> "you can look at a container as if it is an instance from an image because once an image is running it becomes a container"
+    _> "you can look at a container as if it is an instance from an image because once an image is running it becomes a container"
 
-Virtualisation  vs Containerisation
-_> The big difference is in security and isolation as Virtualisation is very safe because it does not share the operating system
-   instead of the Containerisation witch happen to share the same files after all.
-_> The speed of containers is very remarkable as it is very light weight.
+    Virtualisation  vs Containerisation
+    _> The big difference is in security and isolation as Virtualisation is very safe because it does not share the operating system
+    instead of the Containerisation witch happen to share the same files after all.
+    _> The speed of containers is very remarkable as it is very light weight.
 
 Docker Hub :
 ------------
@@ -105,7 +105,7 @@ DOCKER COMMANDS:
 Docker registries ?
 ---------------------
     _> where images are stored and gets updates so world and community can pull and upload their own (like github with codes)
-    EXAMPLES:   docker hub (privare/public)
+        EXAMPLES:   docker hub (privare/public)
     
 DOCKER VOLUMES:
 ----------------
@@ -118,12 +118,12 @@ DOCKER VOLUMES:
 THE PROCESS OF DOCKERIZING AN APP?
 ------------------------------------
 
-1- do i need to copy all files ?
-    _> there is some files u won't need it at all inside, the container those files we can place them inside 
-       a (.) ignore file .dockerignore -> and tell him what you do not want it to copy.
+    1- do i need to copy all files ?
+        _> there is some files u won't need it at all inside, the container those files we can place them inside 
+        a (.) ignore file .dockerignore -> and tell him what you do not want it to copy.
 
-2- Why did we split "package.json" copy command ?
-    _> to outline the files that must be recopied every time and to understand the cash of docker.
+    2- Why did we split "package.json" copy command ?
+        _> to outline the files that must be recopied every time and to understand the cash of docker.
 
 Section 3:
 ----------
@@ -154,188 +154,191 @@ volumes inside docker are just processes that are running in memory, if you do n
 
 Docker Compose:
 ----------------
-is a docker utility that comes with docker it help manage containers in a smooth and clean way. It is not included in docker itself
-it is independent and it has it's own version...
-"Docker Compose helps with defining and running multi-container Docker applications. It allows you to specify the services, networks, and volumes in a single file, making it easier to manage complex applications and their dependencies. With a simple configuration, you can deploy and scale your applications consistently across different environments."
-    _> create a file called docker-compose.yml
-        first thing we must specify the 
-        version version: "3"
-        services:
-            available apps
-            container-name: test_App
-            volumes:
-Basically we are doing the same thing just instead of doing it manually the docker compose simplify that for us
-you can even call the docker file from the docker compose.
+    is a docker utility that comes with docker it help manage containers in a smooth and clean way. It is not included in docker itself
+    it is independent and it has it's own version...
+    "Docker Compose helps with defining and running multi-container Docker applications. It allows you to specify the services, networks,
+    and volumes in a single file, making it easier to manage complex applications and their dependencies. With a simple configuration,
+    you can deploy and scale your applications consistently across different environments."
+        _> create a file called docker-compose.yml
+            first thing we must specify the 
+            version version: "3"
+            services:
+                available apps
+                container-name: test_App
+                volumes:
+    Basically we are doing the same thing just instead of doing it manually the docker compose simplify that for us
+    you can even call the docker file from the docker compose.
 
 Environment Variables:
 -----------------------
-like any program you must include env variables to the runing app you can do that by including it in the docker command
-or easily including it inside the docker-compose under the environment variable.
-if you have many env variables you can pass them inside a file .env "env_file:"
+    like any program you must include env variables to the runing app you can do that by including it in the docker command
+    or easily including it inside the docker-compose under the environment variable.
+    if you have many env variables you can pass them inside a file .env "env_file:"
 
 Docker Environments (Dev, Prod, ...)
 ------------------------------------
-the most commun  way and the docs of docker tell that it is advisable to use the .env file to store ur env variable 
-it must be separeted for everything :
-    _> docker-compose-ref.yml   -> use it for reference
-    _> docker-compose-dev.yml   -> use it for developement version
-    _> docker-compose-prod.yml   -> use it for production version
-to make thing more cleaner.
-    to run docker with a specific file:
-    use -> docker-compose -f docker-compose.dev.yml up -d
-we can also use a default one for the commun data and use the others for only the changes
+    the most commun  way and the docs of docker tell that it is advisable to use the .env file to store ur env variable 
+    it must be separeted for everything :
+        _> docker-compose-ref.yml   -> use it for reference
+        _> docker-compose-dev.yml   -> use it for developement version
+        _> docker-compose-prod.yml   -> use it for production version
+    to make thing more cleaner.
+        to run docker with a specific file:
+        use -> docker-compose -f docker-compose.dev.yml up -d
+    we can also use a default one for the commun data and use the others for only the changes
 
 Multi-Stage Dockerfile:
 -----------------------
-we can do the same as the previous by having multiple docker files inside the project. but the better solution is
-
+    we can do the same as the previous by having multiple docker files inside the project. but there is a better solution
+    for it.
 HOW TO MAKE CONTAINERS COMMUNICATE WITH EACH OTHER 
 ---------------------------------------------------
-docker inpect gives you details and informations about the running container...
-_>  docker run -it jturpin/hollywood hollywood -> film hackers console....
+    docker inpect gives you details and informations about the running container...
+    _>  docker run -it jturpin/hollywood hollywood -> film hackers console....
 
 Docker :
 --------
-_> isolated process.
+    _> isolated process.
 
-Cgroups:
-    kernel limit recources, and keep track 
-Namespaces:
-    to limit a process access and make it a jail process.
-    
-docker ps       =>        list the running containers
-docker ps -a    ->        list all containers
-docker run -it  _>        inter active mode
-docker run -d   _>        detach mode
-binding the container port 
-    docker run -d -p6000:6794
+    Cgroups:
+        kernel limit recources, and keep track 
+    Namespaces:
+        to limit a process access and make it a jail process.
+        
+    docker ps       =>        list the running containers
+    docker ps -a    ->        list all containers
+    docker run -it  _>        inter active mode
+    docker run -d   _>        detach mode
+    binding the container port 
+        docker run -d -p6000:6794
 
-Debugging :
-    docker ps
-    docker logs [container_id]
+    Debugging :
+        docker ps
+        docker logs [container_id]
 
-docker run -d -p6000:6794 --name test container
+    docker run -d -p6000:6794 --name test container
 
-use docker exec to get the terminal of your already running container 
-    docker exec -it [container] /bin/bash
+    use docker exec to get the terminal of your already running container 
+        docker exec -it [container] /bin/bash
 
-docker start -> works with containers 
-docker run  -> create a container from an image
+    docker start -> works with containers 
+    docker run  -> create a container from an image
 
 DOCKER NETWORKING:
 ----------------------
-docker network ls
-docker network create mongo-network
+    docker network ls
+    docker network create mongo-network
 
-Purging All Unused or Dangling Images, Containers, Volumes, and Networks
-    Docker provides a single command that will clean up any resources — images, containers, volumes, and networks — that are dangling (not tagged or associated with a container):
-        docker system prune
-    To additionally remove any stopped containers and all unused images (not just dangling images), add the -a flag to the command:
-        docker system prune -a
+    Purging All Unused or Dangling Images, Containers, Volumes, and Networks
+        Docker provides a single command that will clean up any resources — images, containers, volumes, and networks — that are dangling (not tagged or associated with a container):
+            docker system prune
+        To additionally remove any stopped containers and all unused images (not just dangling images), add the -a flag to the command:
+            docker system prune -a
 
 **********************************************OPENSSL**************************************************
 
-1 - first of all we must init the folder that hold this certificates 
-    mkdir -p /etc/nginx/ssl
-2 - give this folder the required permissions
-    chmod   700 /etc/nginx/ssl
+    1 - first of all we must init the folder that hold this certificates 
+        mkdir -p /etc/nginx/ssl
+    2 - give this folder the required permissions
+        chmod   700 /etc/nginx/ssl
 
 
 --------------------- CEARTE CERTIFICATE------------------------------------------
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/inception.key \
-        -out /etc/nginx/ssl/inception.crt -subj "/C=MA/L=BENGUERIR/O=1337/OU=1337/CN=aelkhali.42.fr/UID=aelkhali"
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/nginx/ssl/inception.key \
+            -out /etc/nginx/ssl/inception.crt -subj "/C=MA/L=BENGUERIR/O=1337/OU=1337/CN=aelkhali.42.fr/UID=aelkhali"
 
-openssl documentation :
-    -x509 option is used togenerate a self-signed certificate.
-    -subj "/type0=value0/type1=value1/type2=value2/..."
-        each type-value pair represents a component of the distinguished name. The common types include:
-        /C=: Country Name (e.g., US for the United States).
-        /L=: Locality Name (City).
-        /ST=: State or Province Name.
-        /O=: Organization Name.
-        /OU=: Organizational Unit Name.
-        /CN=: Common Name (typically the fully qualified domain name for SSL/TLS certificates).
+    openssl documentation :
+        -x509 option is used togenerate a self-signed certificate.
+        -subj "/type0=value0/type1=value1/type2=value2/..."
+            each type-value pair represents a component of the distinguished name. The common types include:
+            /C=: Country Name (e.g., US for the United States).
+            /L=: Locality Name (City).
+            /ST=: State or Province Name.
+            /O=: Organization Name.
+            /OU=: Organizational Unit Name.
+            /CN=: Common Name (typically the fully qualified domain name for SSL/TLS certificates).
 
-    -nodes option in OpenSSL is used to indicate that the private key file being created should not be encrypted with a passphrase.
-    <Keep in mind that using the -nodes option means that anyone with access to the private key file can use it without providing a passphrase. 
-    Therefore, you should be cautious when using unencrypted private keys, especially in production environments or when dealing with sensitive 
-    information. If security is a concern, it's generally better to use passphrase-protected private keys and implement secure key management practices.>
+        -nodes option in OpenSSL is used to indicate that the private key file being created should not be encrypted with a passphrase.
+        <Keep in mind that using the -nodes option means that anyone with access to the private key file can use it without providing a passphrase. 
+        Therefore, you should be cautious when using unencrypted private keys, especially in production environments or when dealing with sensitive 
+        information. If security is a concern, it's generally better to use passphrase-protected private keys and implement secure key management practices.>
 
 ----------------------- END CREATING THE CERTIFICATE-----------------------------
 
-now we make nginx ready to accept those keys and use them by telling him to check the new config file
+    now we make nginx ready to accept those keys and use them by telling him to check the new config file
 
-1- create a config file inside -> /etc/nginx/conf.d/test.conf
-2- add this two directives to your config file:
-    
-    ssl_certificate /etc/nginx/ssl/example.crt;
-    ssl_certificate_key /etc/nginx/ssl/example.key;
-    ssl_protocols TLSv1.2 TLSv1.3;
-
-an example config file to base on :
-
-    server
-    {
-        listen 443 ssl;
-        server_name aelkhali.42.fr;
+    1- create a config file inside -> /etc/nginx/conf.d/test.conf
+    2- add this two directives to your config file:
 
         ssl_certificate /etc/nginx/ssl/example.crt;
         ssl_certificate_key /etc/nginx/ssl/example.key;
-        ssl_protocols TLSv1.3;
+        ssl_protocols TLSv1.2 TLSv1.3;
 
-        root /var/www/;
+    an example config file to base on :
 
-        location / {
+        server
+        {
+            listen 443 ssl;
+            server_name aelkhali.42.fr;
+
+            ssl_certificate /etc/nginx/ssl/example.crt;
+            ssl_certificate_key /etc/nginx/ssl/example.key;
+            ssl_protocols TLSv1.3;
+
             root /var/www/;
-            index index.php;
-        }
 
-        location ~ \.php$ {
-            include snippets/fastcgi-php.conf;
-            fastcgi_pass wordpress:9000;
+            location / {
+                root /var/www/;
+                index index.php;
+            }
+
+            location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+                fastcgi_pass wordpress:9000;
+            }
         }
-    }
 
 
 Docker Volumes and HOT RELOAD:
 -------------------------------
     one of the most important thing in docker is volumes and how we can listen to files changes from the host 
     or from the container itself, and how we can transfer run time data from a running container to our host machine because 
-    anything happened to the container (means a prune to the data it holds) suppose we are running a database server contianer we must save this data somewhere...as we know this container is just a running process that uses RAM memory if it stops we will not find anything...
+    anything happened to the container (means a prune to the data it holds) suppose we are running a database server contianer we must save this data somewhere...
+    as we know this container is just a running process that uses RAM memory if it stops we will not find anything...
 
-syntax for docker volumes:
-    -v  host_directory : container_directory [flag]
-    
-    -v: to tell docker we will add a volume
-    host_directory: used to save or transfer data during run time of container
-    container_directory : used to store data inside the container 
-    [flag] -> used to tell docker the permission
+    syntax for docker volumes:
+        -v  host_directory : container_directory [flag]
 
-the first one and it is the famous one it two way binding:
-    when we are merroring a folder with the data inside a container for example:
-        -v /app/data:/var/http/data
-        -v   host_folder:container_data 
-    the issue with this is if someone deleted the data folder inside the container and we are listening to it using the two way binding 
-    it will be deleted from our host so we must think of limiting this access....
+        -v: to tell docker we will add a volume
+            host_directory: used to save or transfer data during run time of container
+            container_directory : used to store data inside the container 
+        [flag] -> used to tell docker the permission
 
-we must limit this full access and this will take us to the new solution -> the one way binding
--> we listen to the container data folder and we limit it's access to the folder we are mirroring the data inside
-    example:
-        -v /app/data:/var/http/data:ro  -> ro = read only
-    now if we are inside the container and inside /var/http/data and we try to delete/create something it will not be possible
-        -> this file system has read only access.
+    the first one and it is the famous one it two way binding:
+        when we are merroring a folder with the data inside a container for example:
+            -v /app/data:/var/http/data
+            -v   host_folder:container_data 
+        the issue with this is if someone deleted the data folder inside the container and we are listening to it using the two way binding 
+        it will be deleted from our host so we must think of limiting this access....
 
--> there still one issue after solving the previous one
-    this one is very dangerous what if someone deleted the libraries from the host folder and the app inside the container depends on them this will create 
-    a very big problem (container stop)
-    this one can be solved by using "anonymos volumes" using the same previous syntax we add another -v to protect the important directories inside the container
-    doing it this way:
-        -v /app/data:/var/http/data:ro  -> ro -v /var/http/data/important
+    we must limit this full access and this will take us to the new solution -> the one way binding
+    -> we listen to the container data folder and we limit it's access to the folder we are mirroring the data inside
+        example:
+            -v /app/data:/var/http/data:ro  -> ro = read only
+        now if we are inside the container and inside /var/http/data and we try to delete/create something it will not be possible
+            -> this file system has read only access.
 
----> this what answer a very big question why people use such a hirachy to store it's application to make the binding simple
-    if we use a src directory to store our app data only and let other thing outside we will make our binding easier and bind
-    only the required src folder...
+    -> there still one issue after solving the previous one
+        this one is very dangerous what if someone deleted the libraries from the host folder and the app inside the container depends on them this will create 
+        a very big problem (container stop)
+        this one can be solved by using "anonymos volumes" using the same previous syntax we add another -v to protect the important directories inside the container
+        doing it this way:
+            -v /app/data:/var/http/data:ro  -> ro -v /var/http/data/important
+
+    ---> this what answer a very big question why people use such a hirachy to store it's application to make the binding simple
+        if we use a src directory to store our app data only and let other thing outside we will make our binding easier and bind
+        only the required src folder...
 
 Docker-compose:
 ---------------
@@ -382,151 +385,180 @@ DOCKR NETWORKS:
          docker network ls
             ps -> there is some default networks that comes whith docker itself
     "every container of them has its own IP address but docker comes with a great solution like using domain name when browsing the web
-    just use the name of the service and you can access it's IP directly" 
+    just use the name of the service and you can access it's IP directly"
 
-In the context of Docker and computer networking in general, a network refers to a collection of interconnected devices or nodes (such as computers, containers, or virtual machines) that can communicate and share resources with each other. A network can be physical, like a set of connected devices with cables, or it can be virtual, like a logical connection established between software entities.
+    In the context of Docker and computer networking in general, a network refers to a collection of interconnected devices or nodes 
+    (such as computers, containers, or virtual machines) that can communicate and share resources with each other.
+    A network can be physical, like a set of connected devices with cables, or it can be virtual, 
+    like a logical connection established between     software entities.
 
-Here's a breakdown of key concepts related to networks:
+    Here's a breakdown of key concepts related to networks:
 
-1. **Physical Network:**
-   - **Hardware Components:** This includes physical devices such as routers, switches, and cables that enable communication between computers.
+    1. **Physical Network:**
+       - **Hardware Components:** This includes physical devices such as routers, switches, and cables that enable communication between computers.
 
-2. **Logical Network:**
-   - **Software Abstraction:** Networks are often abstracted into logical entities to simplify management and configuration. In Docker, these logical entities are created and managed by Docker's networking features.
+    2. **Logical Network:**
+       - **Software Abstraction:** Networks are often abstracted into logical entities to simplify management and configuration. In Docker, 
+       these logical entities are created and managed by Docker's networking features.
 
-3. **Docker Network (Software Network):**
-   - **Container Connectivity:** In the context of Docker, a network is a virtual space that allows containers to communicate with each other and with the external world.
-   - **Software-Defined Networks (SDN):** Docker uses a software-defined networking approach to create, manage, and configure networks. This means that network configurations are handled through software rather than relying solely on physical hardware.
+    3. **Docker Network (Software Network):**
+       - **Container Connectivity:** In the context of Docker, a network is a virtual space that allows containers to communicate 
+            with each other and with the external world.
+       - **Software-Defined Networks (SDN):** Docker uses a software-defined networking approach to create, manage, and configure 
+            networks. This means that network configurations are handled through software rather than relying solely on physical hardware.
 
-4. **Creation of Docker Networks:**
-   - **Bridge Networks:** When you run a Docker container without specifying a network, it is connected to the default bridge network. You can also create custom bridge networks with specific configurations, such as subnet and gateway settings.
-   - **Host Networks:** Containers can be connected to the host's network namespace, sharing the host's network stack. This is done using the `--network=host` option.
-   - **Overlay Networks:** These are used for connecting containers running on different Docker hosts. This is particularly useful in distributed applications. Docker Swarm and Kubernetes often utilize overlay networks.
-   - **Macvlan Networks:** These networks give containers their own MAC addresses, allowing them to appear as physical devices on the network.
+    4. **Creation of Docker Networks:**
+       - **Bridge Networks:** When you run a Docker container without specifying a network, it is connected to the default bridge network.
+            You can also create custom bridge networks with specific configurations, such as subnet and gateway settings.
+       - **Host Networks:** Containers can be connected to the host's network namespace, sharing the host's network stack.
+            This is done using the `--network=host` option.
+       - **Overlay Networks:** These are used for connecting containers running on different Docker hosts. This is particularly useful 
+            in distributed applications. Docker Swarm and Kubernetes often utilize overlay networks.
+       - **Macvlan Networks:** These networks give containers their own MAC addresses, allowing them to appear as physical devices on the network.
 
-5. **Container Communication:**
-   - Containers within the same Docker network can communicate with each other using their container names as hostnames or through IP addresses.
-   - Docker provides DNS resolution for container names within the same network.
+    5. **Container Communication:**
+       - Containers within the same Docker network can communicate with each other using their container names as hostnames or through IP addresses.
+       - Docker provides DNS resolution for container names within the same network.
 
-6. **External Connectivity:**
-   - Containers can be exposed to the external network through port mappings, allowing access to services running inside the containers.
+    6. **External Connectivity:**
+       - Containers can be exposed to the external network through port mappings, allowing access to services running inside the containers.
 
-In summary, a network, in the context of Docker and general computing, is a means of connecting and enabling communication between devices. Docker provides software-defined networking capabilities that allow containers to be part of virtual networks, and these networks can be customized based on specific requirements.
+    In summary, a network, in the context of Docker and general computing, is a means of connecting and enabling communication between devices. 
+    Docker provides software-defined networking capabilities that allow containers to be part of virtual networks, 
+    and these networks can be customized based on specific requirements.
 ---------------------------------------------------------------------------------------------------------------------------
 -> PID 1 and the best practices for writing Dockerfiles.
 
-### PID 1 (Process ID 1):
+    ### PID 1 (Process ID 1):
 
-In traditional Unix systems, PID 1 represents the first process started by the kernel during the boot process. This process is crucial because it has special responsibilities, including reaping orphaned child processes and responding to signals. In the context of Docker containers, the PID 1 process is significant because it determines how signals are handled within the container.
+    In traditional Unix systems, PID 1 represents the first process started by the kernel during the boot process. 
+    This process is crucial because it has special responsibilities, including reaping orphaned child processes and responding to signals.
+    In the context of Docker containers, the PID 1 process is significant because it determines how signals are handled within the container.
 
-When a container starts, the process specified in the Dockerfile as CMD or ENTRYPOINT becomes PID 1. However, there is a key difference between PID 1 in a container and PID 1 on a host system. PID 1 in a container doesn't have the same responsibilities as the init system on a host.
+    When a container starts, the process specified in the Dockerfile as CMD or ENTRYPOINT becomes PID 1. However, 
+    there is a key difference between PID 1 in a container and PID 1 on a host system.
+    PID 1 in a container doesn't have the same responsibilities as the init system on a host.
 
-Here are some best practices related to PID 1 in Docker containers:
+    Here are some best practices related to PID 1 in Docker containers:
 
-1. **Signal Handling:**
-   - PID 1 in a container should be able to handle signals correctly. For example, it should gracefully handle a SIGTERM signal to allow for a clean shutdown when the `docker stop` command is issued.
+    1. **Signal Handling:**
+       - PID 1 in a container should be able to handle signals correctly. For example, 
+            it should gracefully handle a SIGTERM signal to allow for a clean shutdown when the `docker stop` command is issued.
 
-2. **Avoid Running as a Daemon:**
-   - It's generally recommended not to run your main application process as a daemon in the foreground. Running the process in the foreground allows it to receive signals and respond appropriately.
+    2. **Avoid Running as a Daemon:**
+       - It's generally recommended not to run your main application process as a daemon in the foreground.
+            Running the process in the foreground allows it to receive signals and respond appropriately.
 
-3. **Use Exec Form in CMD/ENTRYPOINT:**
-   - When specifying the CMD or ENTRYPOINT in your Dockerfile, consider using the exec form to run the command directly. This form replaces the shell process with the specified command, avoiding the creation of an additional process.
+    3. **Use Exec Form in CMD/ENTRYPOINT:**
+       - When specifying the CMD or ENTRYPOINT in your Dockerfile, consider using the exec form to run the command directly.
+            This form replaces the shell process with the specified command, avoiding the creation of an additional process.
 
-### Dockerfile Best Practices:
+    ### Dockerfile Best Practices:
 
-When writing Dockerfiles, there are several best practices to ensure efficient, secure, and maintainable container images:
+    When writing Dockerfiles, there are several best practices to ensure efficient, secure, and maintainable container images:
 
-1. **Use Minimal Base Images:**
-   - Start with a minimal base image that contains only the necessary components for your application. This helps reduce the image size and potential security vulnerabilities.
+    1. **Use Minimal Base Images:**
+       - Start with a minimal base image that contains only the necessary components for your application. This helps reduce the image size and potential security vulnerabilities.
 
-2. **Layering:**
-   - Utilize Docker's layer caching mechanism to optimize image builds. Place frequently changing or updating instructions at the end of the Dockerfile to take advantage of caching.
+    2. **Layering:**
+       - Utilize Docker's layer caching mechanism to optimize image builds. Place frequently changing or updating instructions at the end of the Dockerfile to take advantage of caching.
 
-3. **Clean Up After Each Step:**
-   - Remove unnecessary files and dependencies after each step in your Dockerfile to minimize the final image size.
+    3. **Clean Up After Each Step:**
+       - Remove unnecessary files and dependencies after each step in your Dockerfile to minimize the final image size.
 
-4. **COPY Before Installing Dependencies:**
-   - When copying files into the image, do it before installing dependencies. This way, you can take advantage of caching if the dependencies haven't changed.
+    4. **COPY Before Installing Dependencies:**
+       - When copying files into the image, do it before installing dependencies. This way, you can take advantage of caching if the dependencies haven't changed.
 
-5. **Use Non-Root User:**
-   - Run your application as a non-root user to enhance security. Avoid running processes as the root user whenever possible.
+    5. **Use Non-Root User:**
+       - Run your application as a non-root user to enhance security. Avoid running processes as the root user whenever possible.
 
-6. **Specify Version Numbers:**
-   - Specify version numbers for your base images and dependencies to ensure reproducibility and avoid unexpected changes.
+    6. **Specify Version Numbers:**
+       - Specify version numbers for your base images and dependencies to ensure reproducibility and avoid unexpected changes.
 
-7. **Combine RUN Commands:**
-   - Combine multiple RUN commands into a single line using && to minimize the number of layers in the image.
+    7. **Combine RUN Commands:**
+       - Combine multiple RUN commands into a single line using && to minimize the number of layers in the image.
 
-8. **Label Your Images:**
-   - Add labels to your images to provide metadata and information about the image.
+    8. **Label Your Images:**
+       - Add labels to your images to provide metadata and information about the image.
 
-By following these best practices, you can create Docker images that are efficient, secure, and easier to maintain.
 ---------------------------------------------------------------------------------------------------------------------------
 
-Certainly! Let's delve into each of these points:
+ ### 1. Avoid Running as a Daemon:
 
-### 1. Avoid Running as a Daemon:
+    When it's mentioned to avoid running your main application process as a daemon, it means that you should not background the main process using 
+    the traditional daemonizing mechanisms  (e.g., appending `&` at the end of a command or using tools like `nohup`). Instead, 
+    you should let the main process run in the foreground. The primary reasons for this recommendation are:
 
-When it's mentioned to avoid running your main application process as a daemon, it means that you should not background the main process using the traditional daemonizing mechanisms (e.g., appending `&` at the end of a command or using tools like `nohup`). Instead, you should let the main process run in the foreground. The primary reasons for this recommendation are:
+        - **Signal Handling:** Running a process in the foreground allows it to receive signals properly. In Docker, signals are crucial for managing
+            the lifecycle of a container. For example, when you run `docker stop` or `docker restart`, a SIGTERM signal is sent to the main process 
+            of the container. If the process is running in the foreground, it can catch and handle the signal gracefully.
 
-- **Signal Handling:** Running a process in the foreground allows it to receive signals properly. In Docker, signals are crucial for managing the lifecycle of a container. For example, when you run `docker stop` or `docker restart`, a SIGTERM signal is sent to the main process of the container. If the process is running in the foreground, it can catch and handle the signal gracefully.
+        - **Clean Shutdown:** When the main process runs in the foreground, Docker has better control over the termination of the container.
+            This ensures that the application has an opportunity to shut down gracefully, clean up resources, and release any locks or stateful data.
 
-- **Clean Shutdown:** When the main process runs in the foreground, Docker has better control over the termination of the container. This ensures that the application has an opportunity to shut down gracefully, clean up resources, and release any locks or stateful data.
-
-- **Logging:** Running in the foreground simplifies logging. The logs of a foreground process are directly visible in the container's standard output and standard error streams, which makes it easier to capture and manage logs.
+        - **Logging:** Running in the foreground simplifies logging. The logs of a foreground process are directly visible in the container's standard 
+            output and standard error streams, which makes it easier to capture and manage logs.
 
 ### 2. Use Exec Form in CMD/ENTRYPOINT:
 
-In a Dockerfile, the CMD or ENTRYPOINT instruction specifies the command that will be run when a container is started. The choice between CMD and ENTRYPOINT depends on whether you want to provide default arguments or enforce a specific command.
+    In a Dockerfile, the CMD or ENTRYPOINT instruction specifies the command that will be run when a container is started. 
+        The choice between CMD and ENTRYPOINT depends on whether you want to provide default arguments or enforce a specific command.
 
-When it comes to using the exec form in CMD or ENTRYPOINT, it means specifying the command directly without involving a shell process. Here's a comparison:
+    When it comes to using the exec form in CMD or ENTRYPOINT, it means specifying the command directly without involving a shell process. Here's a comparison:
 
-- **Shell Form:**
-  ```Dockerfile
-  CMD npm start
-  ```
+        - **Shell Form:**
+            ```Dockerfile
+            CMD npm start
+            ```
 
-- **Exec Form:**
-  ```Dockerfile
-  CMD ["npm", "start"]
-  ```
+        - **Exec Form:**
+          ```Dockerfile
+          CMD ["npm", "start"]
+          ```
 
-The key advantages of using the exec form include:
+    The key advantages of using the exec form include:
 
-- **Signal Propagation:** The exec form ensures that signals are directly sent to the specified command, without the interference of a shell process. This is important for proper signal handling and graceful shutdown.
+    - **Signal Propagation:** The exec form ensures that signals are directly sent to the specified command, without the interference of a shell process. 
+        This is important for proper signal handling and graceful shutdown.
 
-- **Avoiding Shell Features:** The exec form avoids potential issues related to shell features (e.g., variable substitution, shell meta-characters) that might cause unexpected behavior.
+    - **Avoiding Shell Features:** The exec form avoids potential issues related to shell features 
+        (e.g., variable substitution, shell meta-characters) that might cause unexpected behavior.
 
-- **PID 1 as the Executed Command:** When using the exec form, the command becomes the PID 1 process of the container. This is important for signal handling, especially for proper termination when signals like SIGTERM are sent to the container.
+    - **PID 1 as the Executed Command:** When using the exec form, the command becomes the PID 1 process of the container. 
+        This is important for signal handling, especially for proper termination when signals like SIGTERM are sent to the container.
 
-In summary, avoiding the daemon mode and using the exec form in CMD/ENTRYPOINT contribute to better signal handling, graceful shutdown, and overall improved container behavior in the Docker environment.
+    In summary, avoiding the daemon mode and using the exec form in CMD/ENTRYPOINT contribute to better signal handling, graceful shutdown, 
+    and overall improved container behavior in the Docker environment.
 
-for example:
-Yes, exactly! Your example uses the exec form in the CMD instruction and follows the best practice of running the main process (in this case, Nginx) in the foreground rather than as a daemon. Here's a breakdown of your CMD instruction:
+    this is an example :
+        ```Dockerfile
+        CMD ["nginx", "-g", "daemon off;"]
+        ```
+    this example uses the exec form in the CMD instruction and follows the best practice of running the main process 
+    (in this case, Nginx) in the foreground rather than as a daemon. Here's a breakdown of your CMD instruction:
 
-```Dockerfile
-CMD ["nginx", "-g", "daemon off;"]
-```
 
-- **Exec Form:** The command is specified in the exec form using a JSON array. Each element of the array represents an argument to the command.
+    - **Exec Form:** The command is specified in the exec form using a JSON array. Each element of the array represents an argument to the command.
 
-- **Nginx Command:** The main process to be executed is `nginx`.
+    - **Nginx Command:** The main process to be executed is `nginx`.
 
-- **"-g daemon off;" Argument:** The argument passed to Nginx is `-g daemon off;`. This argument instructs Nginx to run in the foreground and not as a daemon. The `daemon off;` configuration ensures that Nginx doesn't detach and remains in the foreground, allowing Docker to manage signals and the container's lifecycle more effectively.
+    - **"-g daemon off;" Argument:** The argument passed to Nginx is `-g daemon off;`. This argument instructs Nginx to run in the foreground and not as a daemon.
+    The `daemon off;` configuration ensures that Nginx doesn't detach and remains in the foreground, allowing Docker to manage signals and the container's lifecycle more effectively.
 
-By using this approach, your Nginx process will run in the foreground, allowing Docker to properly handle signals and enabling a cleaner shutdown when necessary. This is a good practice for running processes within Docker containers.
+    By using this approach, your Nginx process will run in the foreground, allowing Docker to properly handle signals and enabling a cleaner shutdown when necessary.
+    This is a good practice for running processes within Docker containers.
 
-How docker works under the hood ?
------------------------------------
-docker only virtualize the following 6 namespaces:
-    mnt/file system
-    network             -> give an IP to our container.
-    uts                 -> help setup a host name inside the container.
-    pid                 -> 
-    ipc
-    user
+    How docker works under the hood ?
+    -----------------------------------
+    docker only virtualize the following 6 namespaces:
+        mnt/file system
+        network             -> give an IP to our container.
+        uts                 -> help setup a host name inside the container.
+        pid                 -> 
+        ipc
+        user
 
-Docker debugging commands :
+# Docker debugging commands :
 ----------------------------
     checking docker version output two main things:
         cmd -> docker version
@@ -568,17 +600,9 @@ questions :
 
 ---------------------------------------------------------------------------------
 ***************Adminer************
-Managing databases is one of the essential skill a programer need to have, it makes it easier
-using some database management tools like PHPmyAdmin but it is a bit complicated and it's configuration is a bit hard
-specially if we want to isntall it manually...
-our subject require adminer:
-Replace phpMyAdmin with Adminer and you will get a tidier user interface, better support for MySQL features, higher performance and more security. See detailed comparison.
-Adminer development priorities are: 1. Security, 2. User experience, 3. Performance, 4. Feature set, 5. Size.
-
-
-
-
-
-
-
-
+    Managing databases is one of the essential skill a programer need to have, it makes it easier
+    using some database management tools like PHPmyAdmin but it is a bit complicated and it's configuration is a bit hard
+    specially if we want to isntall it manually...
+    our subject require adminer:
+    Replace phpMyAdmin with Adminer and you will get a tidier user interface, better support for MySQL features, higher performance and more security. See detailed comparison.
+    Adminer development priorities are: 1. Security, 2. User experience, 3. Performance, 4. Feature set, 5. Size.

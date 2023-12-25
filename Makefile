@@ -41,4 +41,4 @@ fclean: down
 
 re : fclean all
 
-.PHONY: all create_dirs up down clean fclean re
+.PHONY: all create_dirs up down clean clean_networks fclean re 

@@ -1,3 +1,18 @@
+# UBUNTU SETUP
+apt update
+apt install -y sudo docker docker-compose make vim
+
+vim /etc/sudoers
+
+# User privilege specification
+-> root ALL=(ALL:ALL) ALL
+    add this below it aelkhali ALL=(ALL:ALL) ALL
+
+-> sudo usermod -aG docker <your_nickname>
+-> groups <your_nickname>
+-> su <your_nickname>
+
+# IMAC SETUP
 root user pass :
     abdo4321
 
