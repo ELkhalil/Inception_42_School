@@ -93,19 +93,19 @@ services:
 
 networks:
   inception:
-    name: inception_net
+    name: inception
     driver: bridge
 
 volumes:
   mariadb_data:
-    name: mariadb_vol
+    name: mariadb
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/aelkhali/data/mariadb
   wordpress_data:
-    name: wordpress_vol
+    name: wordpress
     driver: local
     driver_opts:
       type: none
